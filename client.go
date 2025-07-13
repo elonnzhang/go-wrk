@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"crypto/tls"
 	"crypto/x509"
 	"io/ioutil"
@@ -11,7 +12,15 @@ import (
 	"sync"
 )
 
-func StartClient(url_, heads, requestBody string, meth string, dka bool, responseChan chan *Response, waitGroup *sync.WaitGroup, tc int) {
+func StartClient(ctx context.Context, url_, heads, requestBody string, meth string, dka bool, responseChan chan *Response, waitGroup *sync.WaitGroup, tc int) {
+	// check context
+	select {
+	case <-ctx.Done():
+		return
+
+	default:
+	}
+
 	defer waitGroup.Done()
 
 	var tr *http.Transport
