@@ -2,11 +2,12 @@
 
 this is a small http benchmark utility similar to https://github.com/wg/wrk but written in go.
 it has a couple of features absent from wrk
- 
+
   - https support (quite expensive on the client side with disabled keep alives)
   - http POST support
   - more statistics
   - leaner codebase
+  - [ ] TOOD: support time duration request
 
 ## status
 
@@ -17,6 +18,7 @@ missing features will be added as needed, pull requests are welcome ;)
 
 you need go 1.0+ (1.1 is suggested for performance)
 
+go mod support 1.13
 ```
 git clone git://github.com/adeven/go-wrk.git
 cd go-wrk
@@ -44,7 +46,20 @@ with the flags being
 ```
 for example
 ```
+
+# default Get
 go-wrk -c=400 -t=8 -n=100000 http://localhost:8080/index.html
+
+
+# POST
+./go-wrk -c 1000 -t=8 -n=10000 \
+-m="POST" \
+-H='header1: value1' \
+-H='user: elonnzhang' \
+-H='Content-Type: application/json' \
+-b '{
+    "param": value
+}' http://localhost:8080/api/post
 ```
 
 
