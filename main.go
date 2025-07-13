@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -22,8 +23,9 @@ var (
 	numConnections    = flag.Int("c", 100, "the max numbers of connections used")
 	totalCalls        = flag.Int("n", 1000, "the total number of calls processed")
 	disableKeepAlives = flag.Bool("k", true, "if keep-alives are disabled")
-	dist              = flag.String("d", "", "dist mode")
-	configFile        = flag.String("f", "", "json config file")
+	duration          = flag.String("d", "10s", "the time duration request")
+	dist              = flag.String("a", "", "architecture/distributed mode")
+	configFile        = flag.String("f", "", "json config file, when distributed mode")
 	config            Config
 	target            string
 	headers           = flag.String("H", "User-Agent: go-wrk 0.1 benchmark\nContent-Type: text/html;", "the http headers sent separated by '\\n'")
@@ -89,6 +91,6 @@ func main() {
 	case "s":
 		SlaveNode()
 	default:
-		SingleNode(target)
+		SingleNode(context.Background(), target)
 	}
 }

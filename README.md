@@ -7,7 +7,8 @@ it has a couple of features absent from wrk
   - http POST support
   - more statistics
   - leaner codebase
-  - [ ] TOOD: support time duration request
+  - support single/distributed mode
+  - support time duration request(only single mode)
 
 ## status
 
@@ -43,6 +44,9 @@ with the flags being
     -t=1: the numbers of threads used
     -b="" the http request body
     -s="" if specified, it counts how often the searched string s is contained in the responses
+    -d="" duration of the test, e.g. 2s, 2m, 2h
+
+    -a="", distributed mode
 ```
 for example
 ```
